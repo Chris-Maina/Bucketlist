@@ -1,7 +1,7 @@
 """ views.py """
 
 from flask import render_template, request, session
-from app import app, user_object, bucket_object
+from app import app, user_object, bucket_object, activity_object
 
 @app.route('/')
 def index():
@@ -85,9 +85,24 @@ def delete():
             return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
     return render_template("bucketlist-login.html")
 
-@app.route('/bucketlist-activity', methods=['GET', 'POST'])
-def activity():
+@app.route('/bucketlist-activity/<bucketname>', methods=['GET', 'POST'])
+def activity(bucketname):
     """Handles creation of activities
     """
-    return render_template("bucketlist-activity.html")
+    if 'email' in session.keys():
+        if request.method == 'POST':
+            activity_name = request.form['activity-name']
+            msg = activity_object.add_activity(bucketname, activity_name)
+            print(msg)
+            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
+            if not isinstance(msg, basestring):
+                return render_template("bucketlist-activity.html", activitylist=new_list, name=bucketname)
+            else:
+                # Display list of the bucket name already created
+                return render_template("bucketlist-activity.html", resp=msg, activitylist=new_list)
+        else:
+            response = "You can now add your activities"
+            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
+            return render_template("bucketlist-activity.html", resp=response, name=bucketname, activitylist=new_list)
+    return render_template("bucketlist-login.html")
    
