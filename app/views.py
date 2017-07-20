@@ -58,6 +58,21 @@ def bucket():
         return render_template('bucketlist-bucket.html', bucketlist=bucket_object.buckets)
     return render_template("bucketlist-login.html")
 
+@app.route('/edits', methods=['GET', 'POST'])
+def save_edits():
+    """ Handles editing of buckets """
+    if request.method == 'POST':
+        edit_name = request.form['temp_bucket_name']
+        org_name = request.form['org_bucket_name']
+        msg = bucket_object.edit_bucket(edit_name, org_name)
+        if msg == bucket_object.buckets:
+            response = "Successfully edited bucket"
+            return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
+        else:
+            existing = bucket_object.buckets
+            return render_template('bucketlist-bucket.html', resp=msg, bucketlist=existing)
+    return render_template('bucketlist-bucket.html')
+
 @app.route('/bucketlist-activity', methods=['GET', 'POST'])
 def activity():
     """Handles creation of activities
