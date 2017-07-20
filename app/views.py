@@ -1,7 +1,7 @@
 """ views.py """
 
 from flask import render_template, request, session
-from app import app, user_object
+from app import app, user_object, bucket_object
 
 @app.route('/')
 def index():
@@ -47,6 +47,15 @@ def login():
 def bucket():
     """Handles bucket creation
     """
+    if 'email' in session.keys():
+        if request.method == 'POST':
+            bucket_name = request.form['bucket-name']
+            msg = bucket_object.create_bucket(bucket_name)
+            if msg == bucket_object.buckets:
+                return render_template('bucketlist-bucket.html', bucketlist=msg)
+            else:
+                return render_template('bucketlist-bucket.html', resp=msg, bucketlist=bucket_object.buckets)
+        return render_template('bucketlist-bucket.html', bucketlist=bucket_object.buckets)
     return render_template("bucketlist-login.html")
 
 @app.route('/bucketlist-activity', methods=['GET', 'POST'])
