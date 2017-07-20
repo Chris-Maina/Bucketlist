@@ -12,8 +12,7 @@ class AccountTestCases(unittest.TestCase):
     Test login with no account
     Test login with wrong password
     Test login with existing email and password
-    """
-    
+    """  
     def setup(self):
         """Setting up UserClass before anything
         """
@@ -43,7 +42,7 @@ class AccountTestCases(unittest.TestCase):
             error message
         """
         self.user.user_list = [
-            {'username': u'chris', 'password': u'chrismaina', 'email': u'mainachrisw@gmail.com'}]
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.registeruser(
             "chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
         self.assertEqual(msg, "User already exists")
