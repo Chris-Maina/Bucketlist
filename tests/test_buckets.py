@@ -22,4 +22,9 @@ class TestCasesBuckets(unittest.TestCase):
         """Removing BucketClass
         """
         del self.bucket_class_obj
-        
+
+    def test_empty_field(self):
+        """Check to see empty bucket name field
+        """
+        msg = self.bucket_class_obj.create_bucket("")
+        self.assertEqual(msg, "")
