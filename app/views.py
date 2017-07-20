@@ -1,7 +1,7 @@
 """ views.py """
 
-from flask import render_template
-from app import app
+from flask import render_template, request, session
+from app import app, user_object
 
 @app.route('/')
 def index():
@@ -14,13 +14,32 @@ def index():
 def register():
     """Handles registeration of users
     """
-    return render_template("bucketlist-reg-login.html")
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        cpassword = request.form['confirm-password']
 
+        msg = user_object.registeruser(username, email, password, cpassword)
+        if msg == "Successfully registered. You can now login!":
+            return render_template("bucketlist-login.html", resp=msg)
+        else:
+            return render_template("bucketlist-reg-login.html", resp=msg)
+    return render_template("bucketlist-reg-login.html")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Handles logging in
     """
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        msg = user_object.login(email, password)
+        if msg == "Successfully logged in, create buckets!":
+            session['email'] = email
+            return render_template('bucketlist-bucket.html', resp=msg)
+        else:
+            return render_template('bucketlist-login.html', resp=msg)
     return render_template("bucketlist-login.html")
 
 
