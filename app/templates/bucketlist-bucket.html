@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}Buckets{%endblock%} {% block body %}
+<div class="container page-content">
+	<div class="row container">
+		{%if resp in resp%}
+		<div class="alert alert-success" role="alert" id="reg-alert">
+			{{ resp }}
+		</div>
+		{%endif%}
+		<form id="add-bucket-form" action="/bucketlist-bucket" method="post" style="display: block;margin:0px 0px 30px 30px;">
+			<div class="row">
+				<div class="col-sm-8">
+					<div class="form-group">
+						<input type="text" name="bucket-name" id="bucket-name" placeholder="Bucket name" value="" class="form-control" required>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="form-group">
+						<input type="submit" name="name-submit" id="name-submit" method="post" class=" btn btn-primary" value="Add Bucket">
+					</div>
+				</div>
+			</div>
+		</form>
+		<!--form-->
+	</div><!--row container-->
+	<div class="row">
+		{% for bucket in bucketlist %}
+		<div class="col-sm-4">
+			<div class="card" style="width: 30rem; margin-bottom:20%">
+				<img class="card-img-top" src="static/IMAGES/bucketlist.jpg" alt="Bucket">
+				<div class="card-block">
+					<form id="bucket-name-form-{{ bucket['name'] }}">
+						<div class="form-group">
+							<input type="text" value="{{ bucket['name'] }}" class="card-title form-control" name="temp_bucket_name" style="border:none">
+							<input type="hidden" value="{{ bucket['name'] }}" name="org_bucket_name">
+						</div>
+						<button type="submit" class="btn btn-info btn-md" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/edits">
+							<span class="glyphicon glyphicon-saved"></span> Save
+						</button>
+						<button type="submit" class="btn btn-info btn-md" form="bucket-name-form-{{ bucket['name'] }}" formmethod="post" formaction="/delete">
+							<span class="glyphicon glyphicon-trash"></span> Trash
+						</button>
+						<a href="/bucketlist-activity/{{ bucket['name'] }}" class="btn btn-primary">Add activity</a>
+					</form>
+				</div>
+			</div>
+		</div>
+		{%endfor%}
+	</div>
+</div>
+{% endblock %}
