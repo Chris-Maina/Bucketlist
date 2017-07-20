@@ -83,7 +83,7 @@ class AccountTestCases(unittest.TestCase):
             error message
         """
         self.user.user_list = [
-            {'username': u'chris', 'password': u'chrismaina', 'email': u'mainachrisw@gmail.com'}]
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.login("njekama@gmail.com", "chrismaina")
         self.assertEqual(msg, "You have no account,please sign up")
 
@@ -95,7 +95,7 @@ class AccountTestCases(unittest.TestCase):
             error message
         """
         self.user.user_list = [
-            {'username': u'chris', 'password': u'chrismaina', 'email': u'mainachrisw@gmail.com'}]
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.login("mainachrisw@gmail.com", "mainachris")
         self.assertEqual(msg, "Password mismatch")
 
@@ -107,7 +107,7 @@ class AccountTestCases(unittest.TestCase):
             success message
         """
         self.user.user_list = [
-            {'username': u'chris', 'password': u'chrismaina', 'email': u'mainachrisw@gmail.com'}]
+            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
         msg = self.user.login("mainachrisw@gmail.com", "chrismaina")
         self.assertEqual(msg, "Successfully logged in, create buckets!")
 
