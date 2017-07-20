@@ -73,6 +73,18 @@ def save_edits():
             return render_template('bucketlist-bucket.html', resp=msg, bucketlist=existing)
     return render_template('bucketlist-bucket.html')
 
+@app.route('/delete', methods=['GET', 'POST'])
+def delete():
+    """Handles deletion of buckets
+    """
+    if 'email' in session.keys():
+        if request.method == 'POST':
+            del_name = request.form['temp_bucket_name']
+            msg = bucket_object.delete_bucket(del_name)
+            response = "Successfuly deleted bucket"
+            return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
+    return render_template("bucketlist-login.html")
+
 @app.route('/bucketlist-activity', methods=['GET', 'POST'])
 def activity():
     """Handles creation of activities
