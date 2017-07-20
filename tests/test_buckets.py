@@ -27,4 +27,11 @@ class TestCasesBuckets(unittest.TestCase):
         """Check to see empty bucket name field
         """
         msg = self.bucket_class_obj.create_bucket("")
-        self.assertEqual(msg, "")
+        self.assertEqual(msg, "[]")
+
+    def test_existing_bucket(self):
+        """Check to see bucket name exists or not
+         """
+        self.bucket_class_obj.buckets.append("Rave")
+        msg = self.bucket_class_obj.create_bucket("Rave")
+        self.assertEqual(msg, "Bucket name already exists.")
