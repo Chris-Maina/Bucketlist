@@ -1,5 +1,6 @@
 """ buckets.py """
 import re
+from app.activity import ActivityClass
 
 class BucketClass(object):
     """
@@ -50,4 +51,19 @@ class BucketClass(object):
                     bucket.update(edit_dict)
         else:
             return "No special characters (. , ! space [] )"
+        return self.buckets
+
+    def delete_bucket(self, bucket_name):
+        """Handles removal of buckets using list comprehension
+            Args
+                 bucket name
+            returns
+                 list with bucket name removed
+        """
+        self.buckets = [bucket for bucket in self.buckets if bucket.get(
+            'name') != bucket_name]
+        # Delete activities with same bucket name
+        activity_object = ActivityClass()
+        activity_object.activity_list = [
+            activity for activity in activity_object.activity_list if activity.get('bucketname') != bucket_name]
         return self.buckets
