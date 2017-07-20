@@ -35,9 +35,10 @@ class TestCasesBuckets(unittest.TestCase):
         self.bucket_class_obj.buckets.append("Rave")
         msg = self.bucket_class_obj.create_bucket("Rave")
         self.assertEqual(msg, "Bucket name already exists.")
-        
+
     def test_special_characters(self):
         """Check for special characters in bucket name
         """
         msg = self.bucket_class_obj.create_bucket("Huwai.Gems-2018")
         self.assertEqual(msg, "No special characters (. , ! space [] )")
+        
