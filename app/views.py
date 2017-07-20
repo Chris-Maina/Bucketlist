@@ -105,4 +105,22 @@ def activity(bucketname):
             new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
             return render_template("bucketlist-activity.html", resp=response, name=bucketname, activitylist=new_list)
     return render_template("bucketlist-login.html")
+
+@app.route('/edit-activity', methods=['GET', 'POST'])
+def edit_activity():
+    """ Handles editing of activities
+    """
+    if request.method == 'POST':
+        activity_name = request.form['activity_name']
+        activity_name_org = request.form['activity_name_org']
+        bucket_name = request.form['bucket_name']
+        msg = activity_object.edit_activity(
+            activity_name, activity_name_org, bucket_name)
+        new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucket_name]
+        print(msg)
+        if not isinstance(msg, basestring):
+            response = "Successfully edited activity"
+            return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
+        else:
+            return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=msg)
    
