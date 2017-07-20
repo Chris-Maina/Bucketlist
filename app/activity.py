@@ -29,4 +29,26 @@ class ActivityClass(object):
             return self.activity_list
         else:
             return "No special characters (. , ! space [] )"
-        
+
+    def edit_activity(self, activity_name, org_activity_name, bucket_name):
+        """Handles editing of activities
+            Args
+                editted name and original name
+            returns
+                error message or a list of activities
+        """
+        edit_activity_list = []
+        for activity in self.activity_list:
+            if activity['bucket'] == bucket_name:
+                if activity['name'] != activity_name:
+                    if activity['name'] == org_activity_name:
+                        del activity['name']
+                        edit_dict = {
+                            'name': activity_name,
+                        }
+                        activity.update(edit_dict)
+                        return self.activity_list
+                else:
+                    return "Activity name already exists"
+        return edit_activity_list
+    
