@@ -123,4 +123,15 @@ def edit_activity():
             return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
         else:
             return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=msg)
+
+@app.route('/delete-activity', methods=['GET', 'POST'])
+def delete_activity():
+    """ Handles deletion of activities
+    """
+    if request.method == 'POST':
+        activity_name = request.form['activity_name']
+        bucket_name = request.form['bucket_name']
+        msg = activity_object.delete_activity(activity_name)
+        response = "Successfuly deleted activity"
+        return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
    
