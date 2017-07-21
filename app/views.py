@@ -131,10 +131,11 @@ def edit_activity():
 def delete_activity():
     """ Handles deletion of activities
     """
-    if request.method == 'POST':
-        activity_name = request.form['activity_name']
-        bucket_name = request.form['bucket_name']
-        msg = activity_object.delete_activity(activity_name)
-        response = "Successfuly deleted activity"
-        return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
-   
+    if 'email' in session.keys():
+        if request.method == 'POST':
+            activity_name = request.form['activity_name']
+            bucket_name = request.form['bucket_name']
+            msg = activity_object.delete_activity(activity_name)
+            response = "Successfuly deleted activity"
+            return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
+    return render_template("bucketlist-login.html")
