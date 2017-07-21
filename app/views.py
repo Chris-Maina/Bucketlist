@@ -139,3 +139,9 @@ def delete_activity():
             response = "Successfuly deleted activity"
             return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
     return render_template("bucketlist-login.html")
+
+@app.route('/logout')
+def logout():
+    """Handles logging out of users"""
+    session.pop('email', None)
+    return render_template("index.html")
