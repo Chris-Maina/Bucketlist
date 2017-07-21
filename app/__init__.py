@@ -6,6 +6,7 @@ from app import activity
 
 # Initialize the app
 app = Flask(__name__, instance_relative_config=True)
+app.secret_key = 'hardworkpays'
 
 user_object = useraccounts.UserClass()
 bucket_object = buckets.BucketClass()
