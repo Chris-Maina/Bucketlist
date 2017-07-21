@@ -112,19 +112,20 @@ def activity(bucketname):
 def edit_activity():
     """ Handles editing of activities
     """
-    if request.method == 'POST':
-        activity_name = request.form['activity_name']
-        activity_name_org = request.form['activity_name_org']
-        bucket_name = request.form['bucket_name']
-        msg = activity_object.edit_activity(
-            activity_name, activity_name_org, bucket_name)
-        new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucket_name]
-        print(msg)
-        if not isinstance(msg, basestring):
-            response = "Successfully edited activity"
-            return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
-        else:
-            return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=msg)
+    if 'email' in session.keys():
+        if request.method == 'POST':
+            activity_name = request.form['activity_name']
+            activity_name_org = request.form['activity_name_org']
+            bucket_name = request.form['bucket_name']
+            msg = activity_object.edit_activity(
+                activity_name, activity_name_org, bucket_name)
+            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucket_name]
+            if not isinstance(msg, basestring):
+                response = "Successfully edited activity"
+                return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
+            else:
+                return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=msg)
+    return render_template("bucketlist-login.html")
 
 @app.route('/delete-activity', methods=['GET', 'POST'])
 def delete_activity():
