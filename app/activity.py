@@ -51,4 +51,17 @@ class ActivityClass(object):
                 else:
                     return "Activity name already exists"
         return edit_activity_list
-    
+
+    def delete_activity(self, activity_name):
+        """Handles deletion of bucket activities
+        Args
+            activity name
+        returns
+            list with activity name removed
+        """
+        self.activity_list = [activity for activity in self.activity_list if activity.get(
+            'name') != activity_name]
+        deleted_activity_list = []
+        for activity in self.activity_list:
+            deleted_activity_list.append(activity['name'])
+        return deleted_activity_list
