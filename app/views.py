@@ -101,7 +101,7 @@ def activity(bucketname):
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucketname)
             else:
                 # Display list of the bucket name already created
-                return render_template("bucketlist-activity.html", resp=msg, activitylist=new_list)
+                return render_template("bucketlist-activity.html", resp=msg, activitylist=new_list, name=bucketname)
         else:
             response = "You can now add your activities"
             new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
