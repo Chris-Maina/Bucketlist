@@ -3,6 +3,7 @@
 from flask import render_template, request, session
 from app import app, user_object, bucket_object, activity_object
 
+
 @app.route('/')
 def index():
     """Handles rendering of index page
@@ -27,6 +28,7 @@ def register():
             return render_template("bucketlist-reg-login.html", resp=msg)
     return render_template("bucketlist-reg-login.html")
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Handles logging in
@@ -48,97 +50,119 @@ def bucket():
     """Handles bucket creation
     """
     if 'email' in session.keys():
+        user = session['email']
+        user_buckets = bucket_object.owner_buckets(user)
         if request.method == 'POST':
             bucket_name = request.form['bucket-name']
-            msg = bucket_object.create_bucket(bucket_name)
-            if msg == bucket_object.buckets:
+            msg = bucket_object.create_bucket(bucket_name, user)
+            if not isinstance(msg, basestring):
                 return render_template('bucketlist-bucket.html', bucketlist=msg)
             else:
-                return render_template('bucketlist-bucket.html', resp=msg, bucketlist=bucket_object.buckets)
-        return render_template('bucketlist-bucket.html', bucketlist=bucket_object.buckets)
+                return render_template('bucketlist-bucket.html', resp=msg, bucketlist=user_buckets)
+        return render_template('bucketlist-bucket.html', bucketlist=user_buckets)
     return render_template("bucketlist-login.html")
+
 
 @app.route('/edits', methods=['GET', 'POST'])
 def save_edits():
     """ Handles editing of buckets """
     if 'email' in session.keys():
+        user = session['email']
+        user_buckets = bucket_object.owner_buckets(user)
         if request.method == 'POST':
             edit_name = request.form['temp_bucket_name']
             org_name = request.form['org_bucket_name']
-            msg = bucket_object.edit_bucket(edit_name, org_name)
+            msg = bucket_object.edit_bucket(edit_name, org_name, user)
             if msg == bucket_object.buckets:
                 response = "Successfully edited bucket"
                 return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
             else:
-                existing = bucket_object.buckets
-                return render_template('bucketlist-bucket.html', resp=msg, bucketlist=existing)
+                #existing = bucket_object.buckets
+                return render_template('bucketlist-bucket.html', resp=msg, bucketlist=user_buckets)
         return render_template('bucketlist-bucket.html')
     return render_template("bucketlist-login.html")
+
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
     """Handles deletion of buckets
     """
     if 'email' in session.keys():
+        user = session['email']
         if request.method == 'POST':
             del_name = request.form['temp_bucket_name']
-            msg = bucket_object.delete_bucket(del_name)
+            msg = bucket_object.delete_bucket(del_name, user)
             response = "Successfuly deleted bucket"
             return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
     return render_template("bucketlist-login.html")
+
 
 @app.route('/bucketlist-activity/<bucketname>', methods=['GET', 'POST'])
 def activity(bucketname):
     """Handles creation of activities
     """
     if 'email' in session.keys():
+        user = session['email']
+        # Get a list of users activities for a specific bucketname
+        user_activities = activity_object.owner_activities(user)
+        new_list = [item['name']
+                    for item in user_activities if item['bucket'] == bucketname]
         if request.method == 'POST':
             activity_name = request.form['activity-name']
-            msg = activity_object.add_activity(bucketname, activity_name)
-            print(msg)
-            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
+            msg = activity_object.add_activity(bucketname, activity_name, user)
             if not isinstance(msg, basestring):
+                new_list = [item['name']
+                            for item in msg if item['bucket'] == bucketname]
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucketname)
             else:
-                # Display list of the bucket name already created
+                # Display list of the bucket name already created by user
                 return render_template("bucketlist-activity.html", resp=msg, activitylist=new_list, name=bucketname)
         else:
             response = "You can now add your activities"
-            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucketname]
             return render_template("bucketlist-activity.html", resp=response, name=bucketname, activitylist=new_list)
     return render_template("bucketlist-login.html")
+
 
 @app.route('/edit-activity', methods=['GET', 'POST'])
 def edit_activity():
     """ Handles editing of activities
     """
     if 'email' in session.keys():
+        user = session['email']
         if request.method == 'POST':
             activity_name = request.form['activity_name']
             activity_name_org = request.form['activity_name_org']
             bucket_name = request.form['bucket_name']
             msg = activity_object.edit_activity(
-                activity_name, activity_name_org, bucket_name)
-            new_list = [item['name'] for item in activity_object.activity_list if item['bucket'] == bucket_name]
+                activity_name, activity_name_org, bucket_name, user)
+            print(msg)
             if not isinstance(msg, basestring):
                 response = "Successfully edited activity"
+                # Get edited list of the current bucket
+                new_list = [item['name'] for item in msg if item['bucket'] == bucket_name]
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
             else:
+                # Get user's activities in the current bucket
+                user_activities = activity_object.owner_activities(user)
+                new_list = [item['name'] for item in user_activities if item['bucket'] == bucket_name]
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=msg)
     return render_template("bucketlist-login.html")
+
 
 @app.route('/delete-activity', methods=['GET', 'POST'])
 def delete_activity():
     """ Handles deletion of activities
     """
     if 'email' in session.keys():
+        user = session['email']
         if request.method == 'POST':
             activity_name = request.form['activity_name']
             bucket_name = request.form['bucket_name']
-            msg = activity_object.delete_activity(activity_name)
+            msg = activity_object.delete_activity(activity_name, user)
             response = "Successfuly deleted activity"
             return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
     return render_template("bucketlist-login.html")
+
 
 @app.route('/logout')
 def logout():
