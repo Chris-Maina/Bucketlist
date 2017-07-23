@@ -23,3 +23,8 @@ developed to use data structures only i.e.
     
 ## Running the application
     $  (yourenvname) python run.py
+## How to use appliction
+* Register an account
+* Login with the credentials used during registration
+* Add bucket(s)
+* Add activities
