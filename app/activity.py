@@ -69,6 +69,7 @@ class ActivityClass(object):
         deleted_activity_list = []
         for activity in my_activities:
             deleted_activity_list.append(activity['name'])
+        print(deleted_activity_list)
         return deleted_activity_list
 
     def owner_activities(self, user):
