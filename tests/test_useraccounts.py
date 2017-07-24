@@ -12,13 +12,13 @@ class AccountTestCases(unittest.TestCase):
     Test login with no account
     Test login with wrong password
     Test login with existing email and password
-    """  
-    def setup(self):
+    """
+    def setUp(self):
         """Setting up UserClass before anything
         """
         self.user = UserClass()
 
-    def teardown(self):
+    def tearDown(self):
         """Removing UserClass after everything
         """
         del self.user
@@ -41,11 +41,11 @@ class AccountTestCases(unittest.TestCase):
         Returns
             error message
         """
-        self.user.user_list = [
-            {'username': 'chris', 'password': 'chrismaina', 'email': 'mainachrisw@gmail.com'}]
+        self.user.registeruser(
+            "chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
         msg = self.user.registeruser(
             "chris", "mainachris@gmail.com", "chrismaina", "chrismaina")
-        self.assertEqual(msg, "User already exists")
+        self.assertEqual(msg, "User already exists. Please login")
 
     def test_case_short_pwd(self):
         """
