@@ -25,6 +25,7 @@ class BucketClass(object):
             # check if bucket name exists
             for item in my_buckets:
                 if bucket_name == item['name']:
+                    print (self.buckets)
                     return "Bucket name already exists."
             bucket_dict = {
                 'name': bucket_name,
