@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/Chris-Maina/Bucketlist.svg?branch=master)](https://travis-ci.org/Chris-Maina/Bucketlist)
+[![Build Status](https://travis-ci.org/Chris-Maina/Bucketlist.svg?branch=master)](https://travis-ci.org/Chris-Maina/Bucketlist)             <a href='https://coveralls.io/github/Chris-Maina/Bucketlist'><img src='https://coveralls.io/repos/github/Chris-Maina/Bucketlist/badge.svg' alt='Coverage Status' /></a>
+
 
 
 # Bucketlist Application
