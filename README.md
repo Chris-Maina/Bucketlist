@@ -1,3 +1,6 @@
+<a href='https://coveralls.io/github/Chris-Maina/Bucketlist?branch=develop'><img src='https://coveralls.io/repos/github/Chris-Maina/Bucketlist/badge.svg?branch=develop' alt='Coverage Status' /></a>
+
+
 # Bucketlist Application
 This repository contains an application that helps you create and keep track of activities/dreams you want do/achieve. It is 
 developed to use data structures only i.e. 
