@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Chris-Maina/Bucketlist.svg?branch=develop)](https://travis-ci.org/Chris-Maina/Bucketlist)             <a href='https://coveralls.io/github/Chris-Maina/Bucketlist'><img src='https://coveralls.io/repos/github/Chris-Maina/Bucketlist/badge.svg' alt='Coverage Status' /></a>
+[![Code Health](https://landscape.io/github/Chris-Maina/Bucketlist/develop/landscape.svg?style=flat)](https://landscape.io/github/Chris-Maina/Bucketlist/develop)
 
 
 
