@@ -1,2 +1,0 @@
-# omit views.py
-coverage report omit "views.py"
