@@ -1,2 +1,5 @@
 # omit views.py
-coverage report omit "views.py"
+[report]
+show_missing = True
+omit = views.py
+
