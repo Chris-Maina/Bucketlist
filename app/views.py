@@ -177,7 +177,6 @@ def delete_activity():
 
 
 @app.route('/logout')
-@authorize
 def logout():
     """Handles logging out of users"""
     session.pop('email', None)
