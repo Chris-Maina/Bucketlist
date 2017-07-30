@@ -63,22 +63,32 @@ class ActivityClass(object):
             list with activity name removed
         """
         # Get users activities
-        my_activities = self.owner_activities(user)
-        my_activities = [activity for activity in my_activities if activity.get(
-            'name') != activity_name]
+        for item in range(len(self.activity_list)):
+            if self.activity_list[item]['name'] == activity_name:
+                del self.activity_list[item]
+                break
         deleted_activity_list = []
+        my_activities = self.owner_activities(user)
         for activity in my_activities:
             deleted_activity_list.append(activity['name'])
-        print(deleted_activity_list)
         return deleted_activity_list
 
     def owner_activities(self, user):
         """Returns activities belonging to a user
         Args
-                 user
-            returns
-                 list of user's activities
+             user
+        returns
+            list of user's activities
         """
         user_activities = [item for item in self.activity_list if item['owner'] == user]
         return user_activities
 
+    def deleted_bucket_activities(self, bucket_name):
+        """Delete activities for the bucket that was deleted
+        Args
+             bucket name
+        """
+        for i in range(len(self.activity_list)):
+            if self.activity_list[i]['bucket'] == bucket_name:
+                del self.activity_list[i]
+                break
