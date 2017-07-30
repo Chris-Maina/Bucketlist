@@ -11,6 +11,7 @@ class TestCasesBuckets(unittest.TestCase):
     Test for deletion of existing activity
     Test for editing activity names
     Test for editing activity names with existing activity names
+    Test for deletion of bucket with its activities
     """
 
     def setUp(self):
@@ -74,3 +75,11 @@ class TestCasesBuckets(unittest.TestCase):
         msg = self.activity_class_obj.edit_activity(
             'Hike', 'Cycling', 'Adventure', "mainachrisw@gmail.com")
         self.assertEqual(msg, "Activity name already exists")
+
+    def test_deleted_bucket(self):
+        """Check if bucket deleted will have its activities deleted to
+        """
+        self.activity_class_obj.activity_list = [{'owner': 'mainachrisw@gmail.com', 'bucket': 'Adventure', 'name': 'Cycling'}, {
+            'owner': 'mainachrisw@gmail.com', 'bucket': 'Adventure', 'name': 'Hike'}]
+        res = self.activity_class_obj.deleted_bucket_activities('Adventure')
+        self.assertEqual(res, None)
