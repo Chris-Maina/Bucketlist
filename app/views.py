@@ -55,7 +55,7 @@ def bucket():
         if request.method == 'POST':
             bucket_name = request.form['bucket-name']
             msg = bucket_object.create_bucket(bucket_name, user)
-            if not isinstance(msg, basestring):
+            if isinstance(msg, list):
                 return render_template('bucketlist-bucket.html', bucketlist=msg)
             else:
                 return render_template('bucketlist-bucket.html', resp=msg, bucketlist=user_buckets)
@@ -112,7 +112,7 @@ def activity(bucketname):
         if request.method == 'POST':
             activity_name = request.form['activity-name']
             msg = activity_object.add_activity(bucketname, activity_name, user)
-            if not isinstance(msg, basestring):
+            if isinstance(msg, list):
                 new_list = [item['name']
                             for item in msg if item['bucket'] == bucketname]
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucketname)
@@ -137,7 +137,7 @@ def edit_activity():
             bucket_name = request.form['bucket_name']
             msg = activity_object.edit_activity(
                 activity_name, activity_name_org, bucket_name, user)
-            if not isinstance(msg, basestring):
+            if isinstance(msg, list):
                 response = "Successfully edited activity "+activity_name_org
                 # Get edited list of the current bucket
                 new_list = [item['name'] for item in msg if item['bucket'] == bucket_name]
