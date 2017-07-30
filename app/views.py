@@ -74,7 +74,7 @@ def save_edits():
             org_name = request.form['org_bucket_name']
             msg = bucket_object.edit_bucket(edit_name, org_name, user)
             if msg == bucket_object.buckets:
-                response = "Successfully edited bucket"
+                response = "Successfully edited bucket "+org_name
                 return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
             else:
                 #existing = bucket_object.buckets
@@ -85,14 +85,16 @@ def save_edits():
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete():
-    """Handles deletion of buckets
+    """Handles deletion of buckets and its activies
     """
     if 'email' in session.keys():
         user = session['email']
         if request.method == 'POST':
             del_name = request.form['temp_bucket_name']
             msg = bucket_object.delete_bucket(del_name, user)
-            response = "Successfuly deleted bucket"
+            # Delete the its activies
+            activity_object.deleted_bucket_activities(del_name)
+            response = "Successfuly deleted bucket "+ del_name
             return render_template('bucketlist-bucket.html', resp=response, bucketlist=msg)
     return render_template("bucketlist-login.html")
 
@@ -135,9 +137,8 @@ def edit_activity():
             bucket_name = request.form['bucket_name']
             msg = activity_object.edit_activity(
                 activity_name, activity_name_org, bucket_name, user)
-            print(msg)
             if not isinstance(msg, basestring):
-                response = "Successfully edited activity"
+                response = "Successfully edited activity "+activity_name_org
                 # Get edited list of the current bucket
                 new_list = [item['name'] for item in msg if item['bucket'] == bucket_name]
                 return render_template("bucketlist-activity.html", activitylist=new_list, name=bucket_name, resp=response)
@@ -159,7 +160,7 @@ def delete_activity():
             activity_name = request.form['activity_name']
             bucket_name = request.form['bucket_name']
             msg = activity_object.delete_activity(activity_name, user)
-            response = "Successfuly deleted activity"
+            response = "Successfuly deleted activity "+ activity_name
             return render_template("bucketlist-activity.html", activitylist=msg, name=bucket_name, resp=response)
     return render_template("bucketlist-login.html")
 
