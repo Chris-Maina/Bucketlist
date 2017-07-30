@@ -66,14 +66,13 @@ class BucketClass(object):
             returns
                  list with bucket name removed
         """
+        # Delete bucket with name = bucket_name
+        for item in range(len(self.buckets)):
+            if self.buckets[item]['name'] == bucket_name:
+                del self.buckets[item]
+                break
         # Get users buckets
         my_buckets = self.owner_buckets(user)
-        my_buckets = [bucket for bucket in my_buckets if bucket.get(
-            'name') != bucket_name]
-        # Delete activities with same bucket name
-        activity_object = ActivityClass()
-        activity_object.activity_list = [
-            activity for activity in activity_object.activity_list if activity.get('bucketname') != bucket_name]
         return my_buckets
 
     def owner_buckets(self, user):
