@@ -1,6 +1,5 @@
 """ buckets.py """
 import re
-from app.activity import ActivityClass
 
 class BucketClass(object):
     """
