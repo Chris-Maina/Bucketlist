@@ -11,19 +11,26 @@ developed to use data structures only i.e.
   * Dictionaries
   
 ## Installation procedure
-* Clone this repository
-* Navigate to the downloaded repository. 
-   * $cd Bucketlist
-* Install a virtual environment. 
+ Clone this repository:
+   * https://github.com/Chris-Maina/Bucketlist.git
+   
+ Navigate to the downloaded repository:
+   * $ cd Bucketlist
+   
+ Install a virtual environment: 
    * $ pip install virtualenv
-* (Optional)Test your virtualenv.
+   
+ (Optional)Test your virtualenv:
    * $ vitualenv --version
-* Create your virtual environment.
+   
+ Create your virtual environment:
    * $ cd project_folder
    * $ virtualenv yourenvname
-* Activate your virtual environment.
+   
+ Activate your virtual environment:
    * $ source yourenvname/bin/activate
-* Install requirements.
+   
+ Install requirements:
    * $ (yourenvname) pip install -r requirements.txt
     
 ## Running the application
