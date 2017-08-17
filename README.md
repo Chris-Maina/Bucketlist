@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/Chris-Maina/Bucketlist.svg?branch=develop)](https://travis-ci.org/Chris-Maina/Bucketlist)             <a href='https://coveralls.io/github/Chris-Maina/Bucketlist'><img src='https://coveralls.io/repos/github/Chris-Maina/Bucketlist/badge.svg' alt='Coverage Status' /></a>
 [![Code Health](https://landscape.io/github/Chris-Maina/Bucketlist/develop/landscape.svg?style=flat)](https://landscape.io/github/Chris-Maina/Bucketlist/develop)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bad0615e0d284c8c9121e9d3281e9dfc)](https://www.codacy.com/app/Chris-Maina/Bucketlist?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Chris-Maina/Bucketlist&amp;utm_campaign=Badge_Grade)
 
 
 
