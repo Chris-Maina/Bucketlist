@@ -1,6 +1,5 @@
 """ testcases-bucketlist.py"""
 import unittest
-from app import app
 # import module useraccounts
 from app.useraccounts import UserClass
 
